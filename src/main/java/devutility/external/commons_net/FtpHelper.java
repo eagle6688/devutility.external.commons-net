@@ -87,7 +87,9 @@ public class FtpHelper implements Closeable {
 	public void disconnect() {
 		try {
 			ftpClient.disconnect();
+			System.out.println(String.format("Disconnect ftp server %s:%d successed.", host, port));
 		} catch (IOException e) {
+			System.out.println(String.format("Disconnect ftp server %s:%d failed.", host, port));
 			e.printStackTrace();
 		}
 	}
@@ -98,20 +100,6 @@ public class FtpHelper implements Closeable {
 	}
 
 	/**
-	 * Change working directory.
-	 * @param path: Directory path.
-	 * @return boolean
-	 */
-	public boolean changeWorkingDirectory(String path) {
-		try {
-			return ftpClient.changeWorkingDirectory(path);
-		} catch (IOException e) {
-			e.printStackTrace();
-			return false;
-		}
-	}
-
-	/**
 	 * Create direcroty.
 	 * @param path: Directory path.
 	 * @return boolean
@@ -119,7 +107,7 @@ public class FtpHelper implements Closeable {
 	 */
 	public boolean createDirecroty(String path) throws IOException {
 		if (StringHelper.isNullOrEmpty(path)) {
-			return false;
+			throw new IOException("Path cannot be null, create direcroty failed!");
 		}
 
 		if (!path.startsWith("/")) {
@@ -130,7 +118,8 @@ public class FtpHelper implements Closeable {
 
 		if (StringHelper.isNotEmpty(startPath)) {
 			if (path.indexOf(startPath) != 0) {
-				return false;
+				String message = String.format("path %s must start with start path %s, create direcroty failed!", path, startPath);
+				throw new IOException(message);
 			}
 
 			tailPath = path.substring(startPath.length() + 1);
@@ -142,7 +131,7 @@ public class FtpHelper implements Closeable {
 		for (int i = 0; i < array.length; i++) {
 			creatingDirectory = UrlUtils.concat(creatingDirectory, array[i]);
 
-			if (changeWorkingDirectory(creatingDirectory)) {
+			if (ftpClient.changeWorkingDirectory(creatingDirectory)) {
 				continue;
 			}
 
@@ -185,11 +174,11 @@ public class FtpHelper implements Closeable {
 		}
 
 		if (!createDirecroty(ftpDirectoryPath)) {
-			return false;
+			throw new IOException("Create direcroty failed!");
 		}
 
 		if (!ftpClient.changeWorkingDirectory(ftpDirectoryPath)) {
-			return false;
+			throw new IOException("Change working direcroty failed!");
 		}
 
 		ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE);
@@ -261,15 +250,10 @@ public class FtpHelper implements Closeable {
 	 */
 	public boolean download(String ftpDirectoryPath, String fileName, String localFile) throws IOException {
 		try (OutputStream outputStream = new FileOutputStream(localFile)) {
-			if (!download(ftpDirectoryPath, fileName, outputStream)) {
-				return false;
-			}
-
+			return download(ftpDirectoryPath, fileName, outputStream);
 		} catch (IOException e) {
 			throw e;
 		}
-
-		return true;
 	}
 
 	/**
@@ -285,7 +269,7 @@ public class FtpHelper implements Closeable {
 		}
 
 		if (!ftpClient.changeWorkingDirectory(ftpDirectoryPath)) {
-			return false;
+			throw new IOException("Change working direcroty failed!");
 		}
 
 		return ftpClient.deleteFile(fileName);

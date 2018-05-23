@@ -45,8 +45,6 @@ public class FtpHelper implements Closeable {
 	 */
 	private void init() {
 		ftpClient = new FTPClient();
-		ftpClient.setControlEncoding("utf-8");
-		ftpClient.enterLocalPassiveMode();
 
 		if (StringHelper.isNotEmpty(startPath)) {
 			startPath = startPath.trim();
@@ -73,6 +71,8 @@ public class FtpHelper implements Closeable {
 
 		ftpClient.connect(host, port);
 		ftpClient.login(userName, password);
+		ftpClient.setControlEncoding("utf-8");
+		ftpClient.enterLocalPassiveMode();
 		int replyCode = ftpClient.getReplyCode();
 
 		if (!FTPReply.isPositiveCompletion(replyCode)) {
@@ -119,7 +119,7 @@ public class FtpHelper implements Closeable {
 
 		if (StringHelper.isNotEmpty(startPath)) {
 			if (path.indexOf(startPath) != 0) {
-				String message = String.format("path %s must start with start path %s, create direcroty failed!", path, startPath);
+				String message = String.format("Parameter path %s must start with start path %s that you configured, create direcroty failed!", path, startPath);
 				throw new IOException(message);
 			}
 
@@ -161,13 +161,7 @@ public class FtpHelper implements Closeable {
 	 * @throws IOException
 	 */
 	public boolean isFileExist(String filePath) throws IOException {
-		connect();
-
-		if (ftpClient.listFiles(filePath).length > 0) {
-			return true;
-		}
-
-		return false;
+		return ftpClient.listFiles(filePath).length > 0;
 	}
 
 	/**

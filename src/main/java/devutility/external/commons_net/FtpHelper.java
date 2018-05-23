@@ -46,6 +46,7 @@ public class FtpHelper implements Closeable {
 	private void init() {
 		ftpClient = new FTPClient();
 		ftpClient.setControlEncoding("utf-8");
+		ftpClient.enterLocalPassiveMode();
 
 		if (StringHelper.isNotEmpty(startPath)) {
 			startPath = startPath.trim();
@@ -75,9 +76,9 @@ public class FtpHelper implements Closeable {
 		int replyCode = ftpClient.getReplyCode();
 
 		if (!FTPReply.isPositiveCompletion(replyCode)) {
-			System.out.println(String.format("Connection to ftp server %s:%d failed.", host, port));
+			System.out.println(String.format("Connect to FTP server %s:%d failed.", host, port));
 		} else {
-			System.out.println(String.format("Connection to ftp server %s:%d successed.", host, port));
+			System.out.println(String.format("Connect to FTP server %s:%d successed.", host, port));
 		}
 	}
 
@@ -87,9 +88,9 @@ public class FtpHelper implements Closeable {
 	public void disconnect() {
 		try {
 			ftpClient.disconnect();
-			System.out.println(String.format("Disconnect ftp server %s:%d successed.", host, port));
+			System.out.println(String.format("Disconnect FTP server %s:%d successed.", host, port));
 		} catch (IOException e) {
-			System.out.println(String.format("Disconnect ftp server %s:%d failed.", host, port));
+			System.out.println(String.format("Disconnect FTP server %s:%d failed.", host, port));
 			e.printStackTrace();
 		}
 	}
@@ -141,6 +142,16 @@ public class FtpHelper implements Closeable {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Change working directory.
+	 * @param path: Directory path.
+	 * @return boolean
+	 * @throws IOException
+	 */
+	public boolean changeWorkingDirectory(String path) throws IOException {
+		return ftpClient.changeWorkingDirectory(path);
 	}
 
 	/**

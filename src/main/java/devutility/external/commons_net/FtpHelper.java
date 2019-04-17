@@ -12,9 +12,16 @@ import java.net.SocketException;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
 
-import devutility.internal.lang.StringHelper;
+import devutility.internal.lang.StringUtils;
 import devutility.internal.net.UrlUtils;
 
+/**
+ * 
+ * FtpHelper
+ * 
+ * @author: Aldwin Su
+ * @version: 2019-04-17 19:16:21
+ */
 public class FtpHelper implements Closeable {
 	private String host;
 	private int port;
@@ -25,11 +32,11 @@ public class FtpHelper implements Closeable {
 
 	/**
 	 * FtpHelper
-	 * @param host: Ftp server host address.
-	 * @param port: Ftp server port.
-	 * @param userName: Ftp server login name.
-	 * @param password: Ftp server password.
-	 * @param startPath: The start path after ftp host, optional parameter, if no value set to null.
+	 * @param host Ftp server host address.
+	 * @param port Ftp server port.
+	 * @param userName Ftp server login name.
+	 * @param password Ftp server password.
+	 * @param startPath The start path after ftp host, optional parameter, if no value set to null.
 	 */
 	public FtpHelper(String host, int port, String userName, String password, String startPath) {
 		this.host = host;
@@ -46,11 +53,11 @@ public class FtpHelper implements Closeable {
 	private void init() {
 		ftpClient = new FTPClient();
 
-		if (StringHelper.isNotEmpty(startPath)) {
+		if (StringUtils.isNotEmpty(startPath)) {
 			startPath = startPath.trim();
 
 			if (startPath.endsWith("/")) {
-				startPath = StringHelper.trimEnd(startPath, "/");
+				startPath = StringUtils.trimEnd(startPath, "/");
 			}
 
 			if (!startPath.startsWith("/")) {
@@ -102,12 +109,12 @@ public class FtpHelper implements Closeable {
 
 	/**
 	 * Create direcroty.
-	 * @param path: Directory path.
+	 * @param path Directory path.
 	 * @return boolean
 	 * @throws IOException
 	 */
 	public boolean createDirecroty(String path) throws IOException {
-		if (StringHelper.isNullOrEmpty(path)) {
+		if (StringUtils.isNullOrEmpty(path)) {
 			throw new IOException("Path cannot be null, create direcroty failed!");
 		}
 
@@ -117,7 +124,7 @@ public class FtpHelper implements Closeable {
 
 		String tailPath = path;
 
-		if (StringHelper.isNotEmpty(startPath)) {
+		if (StringUtils.isNotEmpty(startPath)) {
 			if (path.indexOf(startPath) != 0) {
 				String message = String.format("Parameter path %s must start with start path %s that you configured, create direcroty failed!", path, startPath);
 				throw new IOException(message);
@@ -146,7 +153,7 @@ public class FtpHelper implements Closeable {
 
 	/**
 	 * Change working directory.
-	 * @param path: Directory path.
+	 * @param path Directory path.
 	 * @return boolean
 	 * @throws IOException
 	 */
@@ -156,7 +163,7 @@ public class FtpHelper implements Closeable {
 
 	/**
 	 * Check whether the file exists or not.
-	 * @param filePath: File path after host address.
+	 * @param filePath File path after host address.
 	 * @return boolean
 	 * @throws IOException
 	 */
@@ -166,9 +173,9 @@ public class FtpHelper implements Closeable {
 
 	/**
 	 * Upload stream to ftp server.
-	 * @param inputStream: InputStream object.
-	 * @param ftpDirectoryPath: The ftp directory without after host address.
-	 * @param fileName: File name used on ftp server.
+	 * @param inputStream InputStream object.
+	 * @param ftpDirectoryPath The ftp directory without after host address.
+	 * @param fileName File name used on ftp server.
 	 * @return boolean
 	 * @throws SocketException
 	 * @throws IOException
@@ -192,9 +199,9 @@ public class FtpHelper implements Closeable {
 
 	/**
 	 * Upload file to ftp server.
-	 * @param localFile: Local file.
-	 * @param ftpDirectoryPath: The ftp directory without after host address.
-	 * @param fileName: File name used on ftp server.
+	 * @param localFile Local file.
+	 * @param ftpDirectoryPath The ftp directory without after host address.
+	 * @param fileName File name used on ftp server.
 	 * @return boolean
 	 * @throws IOException
 	 */
@@ -210,8 +217,8 @@ public class FtpHelper implements Closeable {
 
 	/**
 	 * Upload file to ftp server, the file name on ftp server same as localFile.
-	 * @param localFile: Local file.
-	 * @param ftpDirectoryPath: The ftp directory without after host address.
+	 * @param localFile Local file.
+	 * @param ftpDirectoryPath The ftp directory without after host address.
 	 * @return boolean
 	 * @throws IOException
 	 */
@@ -227,9 +234,9 @@ public class FtpHelper implements Closeable {
 
 	/**
 	 * Download a file from ftp server.
-	 * @param ftpDirectoryPath: The ftp directory without after host address.
-	 * @param fileName: File name used on ftp server.
-	 * @param outputStream: OutputStream used for download.
+	 * @param ftpDirectoryPath The ftp directory without after host address.
+	 * @param fileName File name used on ftp server.
+	 * @param outputStream OutputStream used for download.
 	 * @return boolean
 	 * @throws IOException
 	 */
@@ -247,9 +254,9 @@ public class FtpHelper implements Closeable {
 
 	/**
 	 * Download a file from ftp server.
-	 * @param ftpDirectoryPath: The ftp directory without after host address.
-	 * @param fileName: File name used on ftp server.
-	 * @param localFile: Local file path.
+	 * @param ftpDirectoryPath The ftp directory without after host address.
+	 * @param fileName File name used on ftp server.
+	 * @param localFile Local file path.
 	 * @return boolean
 	 * @throws IOException
 	 */
@@ -263,8 +270,8 @@ public class FtpHelper implements Closeable {
 
 	/**
 	 * Remove file on ftp server.
-	 * @param ftpDirectoryPath: The ftp directory without after host address.
-	 * @param fileName: File name used on ftp server.
+	 * @param ftpDirectoryPath The ftp directory without after host address.
+	 * @param fileName File name used on ftp server.
 	 * @return boolean
 	 * @throws IOException
 	 */

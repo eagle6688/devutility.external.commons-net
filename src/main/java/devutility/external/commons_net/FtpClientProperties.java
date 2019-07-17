@@ -2,12 +2,21 @@ package devutility.external.commons_net;
 
 import devutility.internal.net.UrlUtils;
 
-public class FtpInstance {
+/**
+ * 
+ * FtpClientProperties
+ * 
+ * @author: Aldwin Su
+ * @version: 2019-07-17 19:39:38
+ */
+public class FtpClientProperties {
 	private String protocol;
 	private String host;
-	private int port;
+	private int port = 21;
 	private String userName;
 	private String password;
+	private boolean passiveMode;
+	private String encoding = "UTF-8";
 	private String start;
 
 	public String getProtocol() {
@@ -50,6 +59,22 @@ public class FtpInstance {
 		this.password = password;
 	}
 
+	public boolean isPassiveMode() {
+		return passiveMode;
+	}
+
+	public void setPassiveMode(boolean passiveMode) {
+		this.passiveMode = passiveMode;
+	}
+
+	public String getEncoding() {
+		return encoding;
+	}
+
+	public void setEncoding(String encoding) {
+		this.encoding = encoding;
+	}
+
 	public String getStart() {
 		return start;
 	}
@@ -58,6 +83,11 @@ public class FtpInstance {
 		this.start = start;
 	}
 
+	/**
+	 * Get full path.
+	 * @param tailPath Tail path of ftp.
+	 * @return String
+	 */
 	public String getPath(String tailPath) {
 		return UrlUtils.concat(start, tailPath);
 	}

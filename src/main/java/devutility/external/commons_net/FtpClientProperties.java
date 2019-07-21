@@ -1,5 +1,7 @@
 package devutility.external.commons_net;
 
+import org.apache.commons.net.ftp.FTP;
+
 import devutility.internal.net.UrlUtils;
 
 /**
@@ -59,7 +61,7 @@ public class FtpClientProperties {
 	 * Sets the file type to be transferred. This should be one of <code>FTP.ASCII_FILE_TYPE</code>,
 	 * <code>FTP.BINARY_FILE_TYPE</code>, etc. The default file type is <code>FTP.ASCII_FILE_TYPE</code>.
 	 */
-	private int fileType;
+	private int fileType = FTP.ASCII_FILE_TYPE;
 
 	/**
 	 * Start path of Ftp server catalog.

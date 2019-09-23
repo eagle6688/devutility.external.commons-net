@@ -3,12 +3,12 @@
 	<parent>
 		<groupId>com.github.eagle6688</groupId>
 		<artifactId>devutility.external</artifactId>
-		<version>1.1.6</version>
+		<version>1.1.7</version>
 	</parent>
 	<artifactId>devutility.external.commons-net</artifactId>
 	<version>1.0.5</version>
 	<packaging>jar</packaging>
-	<description>Some utilities for Apache commons-net version 1.5</description>
+	<description>Some utilities for Apache commons-net</description>
 	<url>http://maven.apache.org</url>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -57,6 +57,7 @@
 		</repository>
 	</distributionManagement>
 	<!-- distributionManagement end -->
+
 	<dependencies>
 		<!-- Apache -->
 		<dependency>

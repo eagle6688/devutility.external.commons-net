@@ -8,28 +8,9 @@
 	<artifactId>devutility.external.commons-net</artifactId>
 	<version>1.0.6</version>
 	<packaging>jar</packaging>
+	<url>https://github.com/eagle6688/devutility.external.commons-net</url>
 	<name>${project.groupId}:${project.artifactId}</name>
 	<description>Some utilities for Apache commons-net</description>
-	<url>https://github.com/eagle6688/devutility.external.commons-net</url>
-
-	<!-- License -->
-	<licenses>
-		<license>
-			<name>The Apache License, Version 2.0</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-		</license>
-	</licenses>
-	<!-- License end -->
-
-	<!-- Developers -->
-	<developers>
-		<developer>
-			<name>Aldwin Su</name>
-			<email>fangyansu@163.com</email>
-			<timezone>+8</timezone>
-		</developer>
-	</developers>
-	<!-- Developers end -->
 
 	<!-- scm -->
 	<scm>
@@ -39,20 +20,6 @@
 		<tag>v${project.version}</tag>
 	</scm>
 	<!-- scm end -->
-
-	<!-- distributionManagement -->
-	<distributionManagement>
-		<snapshotRepository>
-			<id>ossrh</id>
-			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
-		</snapshotRepository>
-		<repository>
-			<id>ossrh</id>
-			<name>Maven Central Staging Repository</name>
-			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-		</repository>
-	</distributionManagement>
-	<!-- distributionManagement end -->
 
 	<!-- dependencies -->
 	<dependencies>

@@ -20,7 +20,7 @@ public class FtpUtils {
 	 * @throws Exception from toModel method.
 	 */
 	public static FtpClientProperties getInstance(String propertiesFile, String prefix) throws Exception {
-		return PropertiesUtils.toModel(propertiesFile, prefix, FtpClientProperties.class);
+		return PropertiesUtils.toObjectFromResource(propertiesFile, prefix, FtpClientProperties.class);
 	}
 
 	/**
@@ -31,6 +31,6 @@ public class FtpUtils {
 	 * @throws Exception from toModel method.
 	 */
 	public static FtpClientProperties getInstence(Properties properties, String prefix) throws Exception {
-		return PropertiesUtils.toModel(properties, prefix, FtpClientProperties.class);
+		return PropertiesUtils.toObject(properties, prefix, FtpClientProperties.class);
 	}
 }

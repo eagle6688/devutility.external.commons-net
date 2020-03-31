@@ -1,6 +1,5 @@
 package devutility.external.commons_net;
 
-import java.io.Closeable;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -22,7 +21,7 @@ import devutility.internal.net.UrlUtils;
  * @author: Aldwin Su
  * @version: 2019-04-17 19:16:21
  */
-public class FtpHelper implements Closeable {
+public class FtpHelper implements AutoCloseable {
 	private String host;
 	private int port;
 	private String userName;
